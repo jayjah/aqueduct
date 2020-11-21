@@ -1,7 +1,7 @@
 import 'dart:mirrors';
+
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
-
 import 'package:aqueduct/src/db/managed/managed.dart';
 import 'package:aqueduct/src/runtime/orm/entity_builder.dart';
 import 'package:aqueduct/src/utilities/sourcify.dart';
@@ -114,9 +114,10 @@ class ManagedEntityRuntimeImpl extends ManagedEntityRuntime
               .getSubclassesOf(Validate)
               .any((subclass) =>
                   MirrorSystem.getName(subclass.simpleName) ==
-                  type.getDisplayString()) ||
-          type.getDisplayString() == "Validate";
-      final isInstanceOfColumn = type.getDisplayString() == "Column";
+                  type.getDisplayString(withNullability: false)) ||
+          type.getDisplayString(withNullability: false) == "Validate";
+      final isInstanceOfColumn =
+          type.getDisplayString(withNullability: false) == "Column";
 
       if (isSubclassOrInstanceOfValidate) {
         importUris.add(annotation.element.source.uri);
