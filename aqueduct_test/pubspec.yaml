@@ -16,4 +16,4 @@ dependencies:
 # This is removed before being published.
 dependency_overrides:
   aqueduct:
-    path: ../aqueduct
+    path: ../
