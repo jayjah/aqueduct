@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
@@ -157,6 +158,10 @@ class CLIServer extends CLICommand with CLIProject {
       if (await supportsLaunchObservatory()) {
         await launchObservatory(observatory.serverUri.toString());
       }
+      File('observe.json')
+        ..createSync()
+        ..writeAsStringSync(
+            jsonEncode({'url': observatory.serverUri.toFilePath()}));
     }
 
     final sendPort = await startupCompleter.future
