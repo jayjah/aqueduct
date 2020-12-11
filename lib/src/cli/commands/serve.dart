@@ -155,10 +155,13 @@ class CLIServer extends CLICommand with CLIProject {
 
     if (shouldRunObservatory) {
       final observatory = await Service.controlWebServer(enable: true);
-      File('observe.json')
-        ..createSync()
-        ..writeAsStringSync(
-            jsonEncode({'url': observatory.serverUri.toString()}));
+      final observatoryFile = File('observe.json');
+      if (observatoryFile != null && observatoryFile.existsSync()) {
+        observatoryFile.deleteSync();
+      }
+      observatoryFile?.createSync();
+      observatoryFile?.writeAsStringSync(
+          jsonEncode({'url': observatory.serverUri.toString()}));
       if (await supportsLaunchObservatory()) {
         await launchObservatory(observatory.serverUri.toString());
       }
