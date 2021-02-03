@@ -90,7 +90,9 @@ class ManagedEntityRuntimeImpl extends ManagedEntityRuntime
     if (mirrorOfAnnotationType?.isSubtypeOf(reflectType(Validate)) ?? false) {
       // If the annotation is a const Validate instantiation, we just copy it directly
       // and import the file where the const constructor is declared.
-      importUris?.add(annotation.element.source.uri);
+      if (annotation.element != null) {
+        importUris?.add(annotation.element.source.uri);
+      }
       return [annotation.toSource().substring(1)];
     } else if (mirrorOfAnnotationType?.isSubtypeOf(reflectType(Column)) ??
         false) {
