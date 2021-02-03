@@ -13,14 +13,16 @@ class AqueductCompiler extends Compiler {
   Map<String, dynamic> compile(MirrorContext context) {
     final m = <String, dynamic>{};
 
+    // compile first all data model to ensure references exist when compiling
+    //  main application parts
+    m.addAll(DataModelCompiler().compile(context));
+
     m.addEntries(context.getSubclassesOf(ApplicationChannel)
       .map((t) => MapEntry(_getClassName(t), ChannelRuntimeImpl(t))));
     m.addEntries(context.getSubclassesOf(Serializable)
       .map((t) => MapEntry(_getClassName(t), SerializableRuntimeImpl(t))));
     m.addEntries(context.getSubclassesOf(Controller)
       .map((t) => MapEntry(_getClassName(t), ControllerRuntimeImpl(t))));
-
-    m.addAll(DataModelCompiler().compile(context));
 
     return m;
   }
