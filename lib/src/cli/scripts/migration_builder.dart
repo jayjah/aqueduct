@@ -22,20 +22,28 @@ class MigrationBuilderExecutable extends Executable<Map<String, dynamic>> {
   Future<Map<String, dynamic>> execute() async {
     try {
       var dataModel = ManagedDataModel.fromCurrentMirrorSystem();
+      print('DataModel: ${dataModel.entities}');
       var schema = Schema.fromDataModel(dataModel);
       var changeList = <String>[];
 
       final source = Migration.sourceForSchemaUpgrade(
           inputSchema, schema, versionTag,
           changeList: changeList);
+      print('Source: ${source}');
+      print('TablesEvaluated:');
+      dataModel.entities.forEach(print);
+
       return {
         "source": source,
         "tablesEvaluated": dataModel.entities.map((e) => e.name).toList(),
         "changeList": changeList
       };
     } on SchemaException catch (e) {
+      print('SchemaException $e');
       return {"error": e.message};
     } on ManagedDataModelError catch (e) {
+      print('ManagedDataModelError $e');
+
       return {"error": e.message};
     }
   }

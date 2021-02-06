@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:aqueduct/src/cli/command.dart';
 import 'package:aqueduct/src/cli/metadata.dart';
+import 'package:aqueduct/src/cli/migration_source.dart';
 import 'package:aqueduct/src/cli/mixins/project.dart';
 import 'package:aqueduct/src/cli/scripts/schema_builder.dart';
-import 'package:aqueduct/src/cli/migration_source.dart';
 import 'package:aqueduct/src/db/schema/schema.dart';
 import 'package:isolate_executor/isolate_executor.dart';
 
@@ -49,6 +49,8 @@ abstract class CLIDatabaseManagingCommand implements CLICommand, CLIProject {
       displayProgress(
           "Replaying versions: ${sources.map((f) => f.versionNumber.toString()).join(", ")}...");
     }
+
+    print('Test1');
 
     final schemaMap = await IsolateExecutor.run(
         SchemaBuilderExecutable.input(sources, fromSchema),
