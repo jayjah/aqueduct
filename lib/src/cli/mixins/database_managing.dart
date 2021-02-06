@@ -50,8 +50,6 @@ abstract class CLIDatabaseManagingCommand implements CLICommand, CLIProject {
           "Replaying versions: ${sources.map((f) => f.versionNumber.toString()).join(", ")}...");
     }
 
-    print('Test1');
-
     final schemaMap = await IsolateExecutor.run(
         SchemaBuilderExecutable.input(sources, fromSchema),
         packageConfigURI: packageConfigUri,
