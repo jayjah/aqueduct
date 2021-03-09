@@ -17,6 +17,7 @@ dependencies:
   aqueduct:
     git:
       url: https://github.com/jayjah/aqueduct.git
+      ref: override_with_git
 
 # This is removed before being published.
 dependency_overrides:
